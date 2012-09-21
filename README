@@ -1,0 +1,26 @@
+Adds the following extensions to idle:
+    - StyleCheck runs pep8 style checker on current module
+    - DocTest runs doctests (with verbose and report options 
+        set to true) on current module
+The extensions are currently compatible in Idlex. 
+
+Installation instructions that should probably be broken down into 
+simpler steps:
+    - Install pep8
+    - Append config-extensions.cfg to ~/.idlerc/config-extensions.cfg
+      (Although in this case it probably doesn't exist yet, so just copy)
+    - Copy StyleCheck.py and DocTest.py into idlelib/extensions
+      (Probably requires sudo-- work around?)
+Or if working with idlex
+    - Install pep8
+    - Install idlex
+    - Copy StyleCheck.py and DocTest.py into idlexlib
+
+To do:
+    - Have students install idlex instead? There's lots of nice extensions
+      there that could be helpful for them
+    - Implement key-bindings (shortcuts to StyleCheck and DocTests)
+    - Check if all this even works in lubuntu
+
+Grace Yeo
+github.com/yhtgrace
