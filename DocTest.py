@@ -2,6 +2,7 @@
 
 from idlelib.OutputWindow import OutputWindow
 import StringIO
+import subprocess as sub
 import doctest
 import sys
 
@@ -23,22 +24,20 @@ class DocTest:      # must be the same name as the file for EditorWindow.py
     def doc_test(self, ev=None):
         """ Run doctests on the current module"""
 
-        sys.stdout = capture = StringIO.StringIO()  # capture verbose report
-
         filename = self.editwin.io.filename
-        if filename:
-            failure_count, test_count = doctest.testfile(filename,
-                                                         module_relative=False,
-                                                         verbose=True,
-                                                         report=True)
-            output = capture.getvalue()
-        else:
+
+        if not filename:
             output = 'Save your module first!\n' \
                      'Or you may be running doctests in the wrong window.'
+        elif filename[-2:] != 'py':
+                output = 'This is not a python module!'
+        else:
+                p = sub.Popen(['python', '-m', 'doctest', '-v', filename],
+                                stdout=sub.PIPE, stderr=sub.PIPE)
+                output, errors = p.communicate()
 
         win = OutputWindow(self.editwin.flist)
-        win.write(output)  # and write to new output window instead
-
+        win.write(output)  # write to output window
 
 # for compatiblity with IdleX
 config_extension_def = """

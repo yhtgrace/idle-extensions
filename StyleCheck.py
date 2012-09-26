@@ -29,7 +29,7 @@ class StyleCheck:   # must be the same name as the file for EditorWindow.py
                            'Or, you could be running' \
                            ' style check in the wrong window.'
         elif filename[-2:] != 'py':
-            output_short = "This is not a python file."
+            output_short = "This is not a python file!"
         else:
             try:
                 p = sub.Popen(['pep8', filename],
