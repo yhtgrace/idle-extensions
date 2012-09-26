@@ -11,7 +11,7 @@ class DocTest:      # must be the same name as the file for EditorWindow.py
 
     menudefs = [
         ('run', [
-            ('!Doc Test', '<<doc-test>>'),
+            ('Doc Test', '<<doc-test>>'),
         ])
     ]
 

@@ -9,7 +9,7 @@ class StyleCheck:   # must be the same name as the file for EditorWindow.py
 
     menudefs = [
         ('run', [
-            ('!Style Check', '<<style-check>>'),
+            ('Style Check', '<<style-check>>'),
         ])
     ]
 
@@ -26,13 +26,13 @@ class StyleCheck:   # must be the same name as the file for EditorWindow.py
 
         if not filename:
             output_short = 'Save your module first!\n' \
-                           'Or, you could be running this' \
+                           'Or, you could be running' \
                            ' style check in the wrong window.'
         elif filename[-2:] != 'py':
             output_short = "This is not a python file."
         else:
             try:
-                p = sub.Popen(['blah', filename],
+                p = sub.Popen(['pep8', filename],
                               stdout=sub.PIPE, stderr=sub.PIPE)
                 output, errors = p.communicate()
 
