@@ -5,31 +5,26 @@ Provides the following third-party extensions for Idle:
     - Both print output to a new output window
 The extensions are currently compatible in Idlex. 
 
-Installation instructions that should probably be broken down into 
-simpler steps:
-    - Install pep8
-    - Append config-extensions.cfg to ~/.idlerc/config-extensions.cfg
-      (Although in this case it probably doesn't exist yet, so just create a new file)
-    - Copy StyleCheck.py and DocTest.py into idlelib/extensions
-      (Probably requires sudo-- work around?)
-Or if working with idlex
-    - Install pep8 
+There's an install script included INSTALL that works in 
+Lubuntu. (Written by Peter Froehlich, thanks Dr. Froehlich!) 
+
+Otherwise, there are 2 ways to install:
+- First install pep8 (In unix this is
+    sudo apt-get install pep8
+1) With idlex
     - Install idlex
     - Copy StyleCheck.py and DocTest.py into idlexlib
-
-In Lubuntu:
-cd the-folder-you-just-extracted
-sudo apt-get install pep8
-cat config-extensions.cfg >> ~/.idlerc/config-extensions.cfg 
-sudo cp *.py /usr/lib/python2.7/idlelib
+2) Without idlex
+    - Append config-extensions .cfg to ~/.idlerc/config-extensions.cfg
+      (If it doesn't exist yet copy the file over)
+    - Copy StyleCheck.py and DocTest.py into idlexlib/extensions
+      which is found in the Python directory
 
 ExampleDocTest.py is an example module from the Python documentation
 for the doctest module. It was used to run tests on the extensions. 
+It isn't needed for the extensions to work. 
 
 To do:
-    - Have students install idlex instead? There's lots of nice extensions
-      there that could be helpful for them. That would involve figuring out
-      the licensing if packaging together
     - Make the new output window un-editable
     - Implement key-bindings (shortcuts to StyleCheck and DocTests)
 

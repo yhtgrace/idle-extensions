@@ -1,0 +1,46 @@
+#!/bin/bash
+
+IDLEPATH="/usr/lib/python2.7/idlelib"
+PEP8PATH="/usr/bin/pep8"
+
+if [ ! -e $IDLEPATH/config-extensions.def ]; then
+	echo "This script requires IDLE, please install it first."
+	exit 1
+fi
+
+if [ ! -e $PEP8PATH ]; then
+	echo "The $PEP8PATH script is not installed, please install it first."
+	exit 1
+fi
+
+if [ $EUID -ne 0 ]; then
+	echo "This script must be run as root, use 'sudo INSTALL' please."
+	exit 1
+fi
+
+cp -i DocTest.py $IDLEPATH
+cp -i StyleCheck.py $IDLEPATH
+
+fgrep >/dev/null DocTest $IDLEPATH/config-extensions.def
+if [ $? -eq 1 ]; then
+	cat <<EOF >>$IDLEPATH/config-extensions.def
+
+[DocTest]
+enable=1
+enable_editor=1
+enable_shell=1
+visible=True
+EOF
+fi
+
+fgrep >/dev/null StyleCheck $IDLEPATH/config-extensions.def
+if [ $? -eq 1 ]; then
+	cat <<EOF >>$IDLEPATH/config-extensions.def
+
+[StyleCheck]
+enable=1
+enable_editor=1
+enable_shell=1
+visible=True
+EOF
+fi
