@@ -28,12 +28,13 @@ class DocTest:      # must be the same name as the file for EditorWindow.py
         sbind = ScriptBinding(self.editwin)
         filename = sbind.getfilename();
 
-        p = sub.Popen(['python', '-m', 'doctest', '-v', filename],
-                        stdout=sub.PIPE, stderr=sub.PIPE)
-        output, errors = p.communicate()
+        if filename:
+            p = sub.Popen(['python', '-m', 'doctest', '-v', filename],
+                            stdout=sub.PIPE, stderr=sub.PIPE)
+            output, errors = p.communicate()
 
-        win = OutputWindow(self.editwin.flist)
-        win.write(output+'\n'+errors)  # write to output window
+            win = OutputWindow(self.editwin.flist)
+            win.write(output+'\n'+errors)  # write to output window
 
 # for compatiblity with IdleX
 config_extension_def = """

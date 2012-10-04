@@ -26,24 +26,25 @@ class StyleCheck:   # must be the same name as the file for EditorWindow.py
         sbind = ScriptBinding(self.editwin)
         filename = sbind.getfilename()
 
-        try:
-            p = sub.Popen(['pep8', filename],
-                          stdout=sub.PIPE, stderr=sub.PIPE)
-            output, errors = p.communicate()
+        if filename:
+            try:
+                p = sub.Popen(['pep8', filename],
+                              stdout=sub.PIPE, stderr=sub.PIPE)
+                output, errors = p.communicate()
 
-            if output.strip():
-                output_short = '\n'.join(
-                    [line.split('/')[-1]
-                     for line in output.split('\n')[:-1]])
-                # shorten pathname in each line of output
-            else:
-                output_short = "Passed all checks!"
+                if output.strip():
+                    output_short = '\n'.join(
+                        [line.split('/')[-1]
+                         for line in output.split('\n')[:-1]])
+                    # shorten pathname in each line of output
+                else:
+                    output_short = "Passed all checks!"
 
-        except OSError:
-            output_short = "Please install pep8."
+            except OSError:
+                output_short = "Please install pep8."
 
-        win = OutputWindow(self.editwin.flist)
-        win.write(output_short)
+            win = OutputWindow(self.editwin.flist)
+            win.write(output_short)
 
 
 # for compatiblity with IdleX
