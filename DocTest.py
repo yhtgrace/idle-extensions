@@ -1,6 +1,7 @@
 """ Idle extension to run doctests from menu"""
 
 from idlelib.OutputWindow import OutputWindow
+from idlelib.ScriptBinding import ScriptBinding
 import StringIO
 import subprocess as sub
 import doctest
@@ -24,20 +25,15 @@ class DocTest:      # must be the same name as the file for EditorWindow.py
     def doc_test(self, ev=None):
         """ Run doctests on the current module"""
 
-        filename = self.editwin.io.filename
+        sbind = ScriptBinding(self.editwin)
+        filename = sbind.getfilename();
 
-        if not filename:
-            output = 'Save your module first!\n' \
-                     'Or you may be running doctests in the wrong window.'
-        elif filename[-2:] != 'py':
-                output = 'This is not a python module!'
-        else:
-                p = sub.Popen(['python', '-m', 'doctest', '-v', filename],
-                                stdout=sub.PIPE, stderr=sub.PIPE)
-                output, errors = p.communicate()
+        p = sub.Popen(['python', '-m', 'doctest', '-v', filename],
+                        stdout=sub.PIPE, stderr=sub.PIPE)
+        output, errors = p.communicate()
 
         win = OutputWindow(self.editwin.flist)
-        win.write(output)  # write to output window
+        win.write(output+'\n'+errors)  # write to output window
 
 # for compatiblity with IdleX
 config_extension_def = """

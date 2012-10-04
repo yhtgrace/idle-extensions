@@ -5,6 +5,13 @@ The example module supplies one function, factorial().  For example,
 
 >>> factorial(5)
 120
+
+>>> factorial(0)
+1
+
+>>>factorial(1)
+1
+
 """
 
 def factorial(n):
@@ -55,6 +62,8 @@ def factorial(n):
         factor += 1
     return result
 
+def main():
+    print 'Hello World!'
 
 if __name__ == "__main__":
     main()

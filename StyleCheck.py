@@ -1,6 +1,7 @@
 """ idle extension to run pep8 style-check from menu"""
 
 from idlelib.OutputWindow import OutputWindow
+from idlelib.ScriptBinding import ScriptBinding
 import subprocess as sub
 
 
@@ -22,29 +23,24 @@ class StyleCheck:   # must be the same name as the file for EditorWindow.py
         """ Runs pep8 stylecheck, captures output and prints to new
             output window."""
 
-        filename = self.editwin.io.filename
+        sbind = ScriptBinding(self.editwin)
+        filename = sbind.getfilename()
 
-        if not filename:
-            output_short = 'Save your module first!\n' \
-                           'Or, you could be running' \
-                           ' style check in the wrong window.'
-        elif filename[-2:] != 'py':
-            output_short = "This is not a python file!"
-        else:
-            try:
-                p = sub.Popen(['pep8', filename],
-                              stdout=sub.PIPE, stderr=sub.PIPE)
-                output, errors = p.communicate()
+        try:
+            p = sub.Popen(['pep8', filename],
+                          stdout=sub.PIPE, stderr=sub.PIPE)
+            output, errors = p.communicate()
 
-                if output.strip():
-                    output_short = '\n'.join(
-                        [line.split('/')[-1]
-                         for line in output.split('\n')[:-1]])
-                    # shorten pathname in each line of output
-                else:
-                    output_short = "Passed all checks!"
-            except OSError:
-                output_short = "Please install pep8."
+            if output.strip():
+                output_short = '\n'.join(
+                    [line.split('/')[-1]
+                     for line in output.split('\n')[:-1]])
+                # shorten pathname in each line of output
+            else:
+                output_short = "Passed all checks!"
+
+        except OSError:
+            output_short = "Please install pep8."
 
         win = OutputWindow(self.editwin.flist)
         win.write(output_short)
